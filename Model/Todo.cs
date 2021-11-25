@@ -1,0 +1,1 @@
+public record class Todo(Guid Id, string Title, bool Done);
