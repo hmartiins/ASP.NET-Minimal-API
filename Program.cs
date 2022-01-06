@@ -1,13 +1,13 @@
-using System;
-using Microsoft.AspNetCore.Http;
+using MiniTodo.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+builder.Services.AddDbContext<AppDbContext>();
 
-app.MapGet("/", () =>
+var app = builder.Build();
+app.MapGet("v1/todos", (AppDbContext context) => 
 {
-    var todo = new Todo(Guid.NewGuid(), "Ir a Academia", false);
-    return Results.Ok(todo);
+    var todos = context.Todos.ToList();
+    return Results.Ok(todos);
 });
 
 app.Run();
